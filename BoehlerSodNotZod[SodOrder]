@@ -1,0 +1,212 @@
+//program documentation
+//author: Thomas Boehler
+//course: cpt187
+//purpose: Module 6 participation
+//create date: Dec 2, 2019
+
+package edu.cpt187.boehler.participation6;
+
+
+public class SodOrder {
+
+	//declare and initialize
+	private final double ZERO_TOTAL = 0.0;
+	private final double TAX_RATE = .075;
+	private int[] itemCounts;
+	private int[] discountCounts;
+	private int[] prizeCounts;
+	private char discountType = ' ';
+	private String itemName = " ";
+	private double itemPrice = 0.0;
+	private String discountName = " ";
+	private double discountRate = 0.0;
+	private int howMany = 0;
+	private int lastItemSelected = 0;
+	private String prizeName = " ";
+
+
+
+	public SodOrder()
+	{
+
+	}//end of constructor
+
+	public 	void setItemCountArray(int borrowedRecordCount)
+	{
+		if (itemCounts == null || borrowedRecordCount > itemCounts.length)
+		{
+			itemCounts = new int[borrowedRecordCount];
+		}
+	}
+
+	public 	void setItemSelection(int borrowedSearchIndex)
+	{
+		lastItemSelected = borrowedSearchIndex;
+	}
+
+	public void setItemName(String[] borrowedItemNames)
+	{
+		itemName = borrowedItemNames[lastItemSelected];
+		itemCounts[lastItemSelected]++;
+	}
+
+	public void setItemPrice(double[] borrowedItemPrices)
+	{
+		itemPrice = borrowedItemPrices[lastItemSelected];
+	}
+
+	public void setHowMany(int borrowedHowMany)
+	{
+		howMany = borrowedHowMany;
+	}
+
+	public void setDiscountType(char borrowedMenuSelection)
+	{
+		discountType = borrowedMenuSelection;
+	}//end of setDiscountType
+
+	public void setDiscountName (String[] borrowedDiscountNames)
+	{
+		if (discountCounts == null)
+		{
+			discountCounts = new int[borrowedDiscountNames.length];
+		}
+		if (discountType == 'A')
+		{ 
+			discountName = borrowedDiscountNames[0];
+			discountCounts[0]++;
+		}
+		else if (discountType == 'B')
+		{
+			discountName = borrowedDiscountNames[1];
+			discountCounts[1]++;
+		}
+		else 
+		{
+			discountName = borrowedDiscountNames[2];
+			discountCounts[2]++;
+		}
+
+	}
+
+	public void setDiscountRate(double[] borrowedDiscountRates)
+	{
+		if (discountType == 'A')
+		{ 
+			discountRate = borrowedDiscountRates[0];
+		}
+		else if (discountType == 'B')
+		{
+			discountRate = borrowedDiscountRates[1];
+		}
+		else 
+		{
+			discountRate = borrowedDiscountRates[2];
+		}
+	}
+
+	public void setPrizeName(String[] borrowedPrizeName, int borrowedPrizeIndex)
+	{
+		if (prizeCounts == null)
+		{
+			prizeCounts = new int[borrowedPrizeName.length];
+		}
+		prizeName = borrowedPrizeName[borrowedPrizeIndex];
+		prizeCounts[borrowedPrizeIndex]++;
+	}
+
+	public void setDecreaseInStock(Inventory borrowedInventoryObject)
+	{
+		borrowedInventoryObject.setReduceStock(howMany);
+	}
+	
+	public int getInStockCount(int[] borrowedInStockCounts)
+	{
+		return borrowedInStockCounts[lastItemSelected];
+	}
+
+	public String getItemName()
+	{
+		return itemName;
+	}
+
+	public double getItemPrice()
+	{
+		return itemPrice;
+	}
+
+	public int[] getItemCounts()
+	{
+		return itemCounts;
+	}
+
+	public int getHowMany()
+	{
+		return howMany;
+	}
+
+	public String getDiscountName()
+	{
+		return discountName;
+	}
+
+	public double getDiscountRate()
+	{
+		return discountRate;
+	}
+
+	public int[] getDiscountCounts()
+	{
+		return discountCounts;
+	}
+
+	public double getDiscountAmt()
+	{
+		return discountRate * itemPrice;
+	}
+
+	public double getDiscountPrice()
+
+	{
+		return itemPrice - getDiscountAmt();
+	}
+
+	public String getPrizeName()
+	{
+		return prizeName;
+	}
+
+	public int[] getPrizeCounts()
+	{
+		return prizeCounts;
+	}
+
+	public double getSubTotal()
+	{
+		return getDiscountPrice() * howMany;
+	}
+
+	public double getTaxRate()
+	{
+		return TAX_RATE;
+	}
+
+	public double getTaxAmt()
+	{
+		return getTaxRate() * getSubTotal();
+	}
+
+	public double getTotalCost()
+	{
+		if (discountType == ' ')
+		{
+			return ZERO_TOTAL;
+		}
+		else
+		{
+			return getSubTotal() + getTaxAmt();
+		}
+	}
+
+	
+}//end of class
